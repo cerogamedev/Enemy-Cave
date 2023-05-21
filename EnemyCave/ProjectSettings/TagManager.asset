@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Hand
   - Slot
+  - Close
+  - PlayedCard
+  - EnemyCard
   layers:
   - Default
   - TransparentFX

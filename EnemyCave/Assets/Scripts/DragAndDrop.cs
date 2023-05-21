@@ -4,18 +4,38 @@ using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public static int nextTourCounter = 4;
+
     private RectTransform dragTransform;
     private Vector2 initialPosition;
-    private Transform mousePos;
-    public Image image;
+    public RectTransform [] imageRect;
+
+    public Canvas canvas;
+    public Camera mainCamera;
+    public int usingNumber = 0;
 
     [HideInInspector] public Transform parentAfterDrug;
     private void Awake()
     {
+        
         dragTransform = GetComponent<RectTransform>();
         initialPosition = dragTransform.anchoredPosition;
     }
+    private void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Close");
 
+        imageRect = new RectTransform[taggedObjects.Length];
+
+        for (int i = 0; i < taggedObjects.Length; i++)
+        {
+            imageRect[i] = taggedObjects[i].GetComponent<RectTransform>();
+        }
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrug = transform.parent;
@@ -31,10 +51,29 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("Stop");
-        Vector2 mousePos = Input.mousePosition;
-        Debug.Log(mousePos.x);
-        Debug.Log(mousePos.y);
+        for (int i = 0; i < imageRect.Length; i++)
+        {
+            RectTransform currentObject = imageRect[i];
+
+            // Objeleri iþleme
+            Vector2 localMousePosition = imageRect[i].InverseTransformPoint(Input.mousePosition);
+            if (imageRect[i].rect.Contains(localMousePosition))
+            {
+                Debug.Log(gameObject.name + " Inside " + currentObject.name);
+                this.gameObject.SetActive(false);
+                this.gameObject.tag = "PlayedCard";
+                usingNumber += 1;
+                nextTourCounter -= 1;
+
+                //enemy cards destroy here -->> change it
+                //Object.Destroy(currentObject.transform.GetChild(0).gameObject);
+                currentObject.transform.GetChild(0).GetComponent<Enemy>().SetHealth(-this.gameObject.GetComponent<Card>().GetAttack());
+                if (2*currentObject.transform.GetChild(0).GetComponent<Enemy>().healthInt <= this.gameObject.GetComponent<Card>().attackInt)
+                {
+                    currentObject.transform.tag = "Slot";
+                }
+            }
+        }
         // Reset to initial position if not dropped on a valid target
         if (!eventData.pointerEnter)
         {
@@ -42,4 +81,5 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         transform.SetParent(parentAfterDrug);
     }
+
 }

@@ -9,9 +9,9 @@ public class NextTourManager : MonoBehaviour
     public RectTransform[] HandRect;
 
     public GameObject EnemyCard;
-    public GameObject Card;
 
     public GameObject NextTourButton;
+
     void Start()
     {
         tourNumb = 0;
@@ -28,7 +28,6 @@ public class NextTourManager : MonoBehaviour
         {
             imageRect[i] = taggedObjects[i].GetComponent<RectTransform>();
         }
-        PlayedCards();
         if (DragAndDrop.nextTourCounter == 0)
             NextTourButton.SetActive(true);
         else
@@ -38,8 +37,14 @@ public class NextTourManager : MonoBehaviour
     }
     public void NextTour()
     {
-        DragAndDrop.nextTourCounter = 4;
-        tourNumb += 1;
+        GameObject[] card = GameObject.FindGameObjectsWithTag("PlayinCard");
+
+        for (int i = 0; i < card.Length; i++)
+        {
+            card[i].SetActive(false);
+            card[i].transform.tag = "PlayedCard";
+        }
+        DragAndDrop.nextTourCounter = 2;
         TotalTourDamage();
         RandomEnemyCardCreate();
         GetCardsFromDeck();
@@ -51,13 +56,14 @@ public class NextTourManager : MonoBehaviour
 
         HandRect = new RectTransform[taggedObjects.Length];
 
-        for (int i = 0; i < taggedObjects.Length; i++)
+        GameObject[] card = GameObject.FindGameObjectsWithTag("InsideDeck");
+
+        for (int i = 0; i < 4; i++)
         {
             HandRect[i] = taggedObjects[i].GetComponent<RectTransform>();
-            Instantiate(Card, HandRect[i].transform);
-
+            card[i].transform.tag = "PlayinCard";
+            card[i].transform.SetParent(HandRect[i]);
         }
-
     }
     void RandomEnemyCardCreate()
     {
@@ -65,7 +71,7 @@ public class NextTourManager : MonoBehaviour
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("EnemyCard");
         for (int i = 0; i < taggedObjects.Length; i++)
         {
-            RandomTotal += taggedObjects[i].GetComponent<Enemy>().attackInt;
+            RandomTotal += taggedObjects[i].GetComponent<Enemy>().healthInt;
             
         }
         if (imageRect.Length > 0)
@@ -77,19 +83,14 @@ public class NextTourManager : MonoBehaviour
         else
             return;
     }
-    void PlayedCards()
-    {
-        GameObject[] playedCards = GameObject.FindGameObjectsWithTag("PlayedCard");
-        //grave götür sakla
 
-    }
     void TotalTourDamage()
     {
 
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("EnemyCard");
         for (int i = 0; i < taggedObjects.Length; i++)
         {
-            int damage = taggedObjects[i].GetComponent<Enemy>().attackInt;
+            int damage = taggedObjects[i].GetComponent<Enemy>().healthInt;
             Health.Instance.SetHealth(-damage);
         }
     }

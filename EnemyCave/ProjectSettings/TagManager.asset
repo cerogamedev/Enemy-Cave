@@ -9,6 +9,10 @@ TagManager:
   - Close
   - PlayedCard
   - EnemyCard
+  - InsideDeck
+  - PlayinCard
+  - Grave
+  - Deck
   layers:
   - Default
   - TransparentFX

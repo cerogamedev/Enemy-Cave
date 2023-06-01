@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public static int nextTourCounter = 4;
+    public static int nextTourCounter = 2;
 
     private RectTransform dragTransform;
     private Vector2 initialPosition;
@@ -60,7 +60,6 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             if (imageRect[i].rect.Contains(localMousePosition))
             {
                 Debug.Log(gameObject.name + " Inside " + currentObject.name);
-                this.gameObject.SetActive(false);
                 this.gameObject.tag = "PlayedCard";
                 usingNumber += 1;
                 nextTourCounter -= 1;

@@ -71,6 +71,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 {
                     currentObject.transform.tag = "Slot";
                 }
+                Health.Instance.SetArmor(this.gameObject.GetComponent<Card>().healthInt);
             }
         }
         // Reset to initial position if not dropped on a valid target

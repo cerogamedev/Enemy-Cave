@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a69f104551aa7b4894a19749bc1cdf2, type: 3}
-  m_Name: Knight
+  m_Name: Defence
   m_EditorClassIdentifier: 
-  cardName: Attack
-  attack: 3
-  health: 0
+  cardName: Defence
+  attack: 0
+  health: 2
   artwork: {fileID: 0}

@@ -17,17 +17,19 @@ public class Card : MonoBehaviour
 
     void Update()
     {
-        _health.text = card.health.ToString();
-        _attack.text = card.attack.ToString();
+        _health.text = healthInt.ToString();
+        _attack.text = attackInt.ToString();
         ArtWork.sprite = card.artwork;
-        _name.text = card.name;
+        _name.text = card.cardName;
         healthInt = card.health;
         attackInt = card.attack;
-        if (healthInt <= 0)
-            Destroy(this.gameObject);
     }
     public int GetAttack()
     {
         return attackInt;
+    }
+    public int GetDeffence()
+    {
+        return healthInt;
     }
 }

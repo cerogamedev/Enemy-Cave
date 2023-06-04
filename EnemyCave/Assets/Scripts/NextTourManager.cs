@@ -16,6 +16,7 @@ public class NextTourManager : MonoBehaviour
     {
         tourNumb = 0;
         NextTourButton.SetActive(false);
+        
     }
 
     void Update()
@@ -56,13 +57,14 @@ public class NextTourManager : MonoBehaviour
 
         HandRect = new RectTransform[taggedObjects.Length];
 
-        GameObject[] card = GameObject.FindGameObjectsWithTag("InsideDeck");
 
         for (int i = 0; i < 4; i++)
         {
+            GameObject[] _card = GameObject.FindGameObjectsWithTag("InsideDeck");
+            int RandomCardNumber = Random.Range(0, _card.Length);
             HandRect[i] = taggedObjects[i].GetComponent<RectTransform>();
-            card[i].transform.tag = "PlayinCard";
-            card[i].transform.SetParent(HandRect[i]);
+            _card[RandomCardNumber].transform.SetParent(HandRect[i]);
+            _card[RandomCardNumber].transform.tag = "PlayinCard";
         }
     }
     void RandomEnemyCardCreate()
@@ -90,8 +92,24 @@ public class NextTourManager : MonoBehaviour
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("EnemyCard");
         for (int i = 0; i < taggedObjects.Length; i++)
         {
-            int damage = taggedObjects[i].GetComponent<Enemy>().healthInt;
-            Health.Instance.SetHealth(-damage);
+            taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown -= 1;
+            if (taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown == 0)
+            {
+                int damage = taggedObjects[i].GetComponent<Enemy>().healthInt;
+                taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown = taggedObjects[i].GetComponent<Enemy>()._DamageCountdown;
+                for (int j = 0; j < damage; j++)
+                {
+                    if (Health.Instance.mainArmor == 0)
+                    {
+                        Health.Instance.SetHealth(-1);
+                    }
+                    else
+                    {
+                        Health.Instance.SetArmor(-1);
+                    }
+                }
+            }
+
         }
     }
 }

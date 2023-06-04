@@ -28,16 +28,18 @@ public class Health : MonoBehaviour
         }
     }
 
-    [SerializeField] TextMeshProUGUI healthText;
-    public int mainHealth;
+    [SerializeField] TextMeshProUGUI healthText, armorText;
+    public int mainHealth, mainArmor;
     void Start()
     {
         mainHealth = 30;
+        mainArmor = 5;
     }
 
     void Update()
     {
         healthText.text = mainHealth.ToString();
+        armorText.text = mainArmor.ToString();
     }
     public int GetHealth()
     {
@@ -46,5 +48,14 @@ public class Health : MonoBehaviour
     public void SetHealth(int health)
     {
         mainHealth += health;
+    }
+
+    public int GetArmor()
+    {
+        return mainArmor;
+    }
+    public void SetArmor(int armor)
+    {
+        mainArmor += armor;
     }
 }

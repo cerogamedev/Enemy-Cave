@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject chooseSide;
     // Start is called before the first frame update
     void Start()
     {
-        
+        chooseSide.SetActive(true);
     }
 
     // Update is called once per frame

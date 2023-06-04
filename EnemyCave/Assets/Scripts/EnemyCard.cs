@@ -10,4 +10,5 @@ public class EnemyCard : ScriptableObject
     public int attack;
     public int health;
     public Sprite artwork;
+    public int DamageCountdown;
 }

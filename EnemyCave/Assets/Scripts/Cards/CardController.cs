@@ -7,4 +7,5 @@ public class CardController : ScriptableObject
     public int attack;
     public int health;
     public Sprite artwork;
+
 }

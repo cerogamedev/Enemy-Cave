@@ -10,24 +10,36 @@ public class Card : MonoBehaviour
     public Image ArtWork;
     public TextMeshProUGUI _health, _attack, _name;
     public int healthInt, attackInt;
+
+    public bool isDefence, isAttack;
     void Start()
     {
-
+        healthInt = card.health;
+        attackInt = card.attack;
+        if (healthInt > 0)
+        {
+            isDefence = true;
+            isAttack = false;
+        }
+        else if (attackInt > 0)
+        {
+            isAttack = true;
+            isDefence = false;
+        }
     }
 
     void Update()
     {
-        _health.text = healthInt.ToString();
-        _attack.text = attackInt.ToString();
+        _health.text = "H: " + healthInt.ToString();
+        _attack.text = "A: "+ attackInt.ToString();
         ArtWork.sprite = card.artwork;
         _name.text = card.cardName;
-        healthInt = card.health;
-        attackInt = card.attack;
     }
     public int GetAttack()
     {
         return attackInt;
     }
+
     public int GetDeffence()
     {
         return healthInt;

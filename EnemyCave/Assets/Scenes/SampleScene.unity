@@ -3158,6 +3158,8 @@ MonoBehaviour:
   _name: {fileID: 1587050254}
   healthInt: 0
   attackInt: 0
+  isDefence: 0
+  isAttack: 0
 --- !u!114 &840827631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4390,7 +4392,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1226404045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 321468160}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseWarrior
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1226404045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4712,6 +4726,8 @@ MonoBehaviour:
   _name: {fileID: 1975746721}
   healthInt: 0
   attackInt: 0
+  isDefence: 0
+  isAttack: 0
 --- !u!114 &1290050297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5954,7 +5970,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1681281202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 321468160}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseShaman
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1681281202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6678,6 +6706,8 @@ MonoBehaviour:
   _name: {fileID: 371659219}
   healthInt: 0
   attackInt: 0
+  isDefence: 0
+  isAttack: 0
 --- !u!114 &1895488337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7101,7 +7131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2084822921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7465,7 +7495,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2126322851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 321468160}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseRogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2126322851
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,6 +35,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             imageRect[i] = taggedObjects[i].GetComponent<RectTransform>();
         }
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

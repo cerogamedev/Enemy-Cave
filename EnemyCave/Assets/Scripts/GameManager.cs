@@ -5,13 +5,27 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject chooseSide;
+    public static string choose;
     // Start is called before the first frame update
     void Start()
     {
         chooseSide.SetActive(true);
     }
-
-    // Update is called once per frame
+    public void ChooseWarrior()
+    {
+        choose = "Warrior";
+        chooseSide.SetActive(false);
+    }
+    public void ChooseShaman()
+    {
+        choose = "Shaman";
+        chooseSide.SetActive(false);
+    }
+    public void ChooseRogue()
+    {
+        choose = "Rogue";
+        chooseSide.SetActive(false);
+    }
     void Update()
     {
         GameObject[] playedCard = GameObject.FindGameObjectsWithTag("PlayedCard");

@@ -14,6 +14,8 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public Camera mainCamera;
     public int usingNumber = 0;
 
+    public bool beginDrag = false;
+
     [HideInInspector] public Transform parentAfterDrug;
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         parentAfterDrug = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
-
+        beginDrag = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -81,6 +83,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             dragTransform.anchoredPosition = initialPosition;
         }
         transform.SetParent(parentAfterDrug);
+        beginDrag = false;
     }
 
 }

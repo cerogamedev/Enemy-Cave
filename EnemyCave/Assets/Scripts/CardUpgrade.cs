@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CardUpgrade : MonoBehaviour
 {
     [HideInInspector] public bool StartUp = true;
+    public bool startToUpgrade = false;
     void Start()
     {
         this.gameObject.GetComponent<WarriorUpgrades>().enabled = false;
         this.gameObject.GetComponent<ShamanUpgrades>().enabled = false;
         this.gameObject.GetComponent<RogueUpgrades>().enabled = false;
-
+        
     }
 
     void Update()
@@ -32,12 +34,12 @@ public class CardUpgrade : MonoBehaviour
         if (this.gameObject.GetComponent<DragAndDrop>().usingNumber==2 && StartUp == true)
         {
             StartCoroutine(StartUpgradeSystem());
-            StartUp = false;
         }
     }
     IEnumerator StartUpgradeSystem()
     {
-
+        StartUp = false;
+        startToUpgrade = true;
         yield return null;
     }
 }

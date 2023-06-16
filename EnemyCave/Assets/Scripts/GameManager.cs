@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject chooseSide;
     public static string choose;
+    public float movementSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,8 @@ public class GameManager : MonoBehaviour
         GameObject Grave = GameObject.FindGameObjectWithTag("Grave");
         for (int i = 0; i < playedCard.Length; i++)
         {
-            playedCard[i].transform.position = Grave.transform.position;
+            float step = movementSpeed * Time.deltaTime;
+            playedCard[i].transform.position = Vector3.MoveTowards(playedCard[i].transform.position, Grave.transform.position, step);
             playedCard[i].transform.SetParent(Grave.transform);
             playedCard[i].GetComponent<DragAndDrop>().enabled = false;
         }
@@ -48,7 +50,8 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < playinCard.Length; i++)
             {
-                playinCard[i].transform.position = Grave.transform.position;
+                float step = movementSpeed * Time.deltaTime;
+                playinCard[i].transform.position = Vector3.MoveTowards(playinCard[i].transform.position, Grave.transform.position, step);
                 playinCard[i].transform.SetParent(Grave.transform);
                 playinCard[i].GetComponent<DragAndDrop>().enabled = false;
                 playinCard[i].transform.tag = "PlayedCard";

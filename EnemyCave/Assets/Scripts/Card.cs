@@ -39,9 +39,16 @@ public class Card : MonoBehaviour
     {
         return attackInt;
     }
-
+    public void SetAttack(int attack)
+    {
+        attackInt += attack;
+    }
     public int GetDeffence()
     {
         return healthInt;
+    }
+    public void SetDefence(int defence)
+    {
+        healthInt += defence;
     }
 }

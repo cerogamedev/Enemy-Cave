@@ -12,6 +12,9 @@ public class NextTourManager : MonoBehaviour
 
     public GameObject NextTourButton;
 
+    public bool isFinished = false;
+    private GameObject[] fromThis, toHere;
+
     void Start()
     {
         tourNumb = 0;
@@ -33,9 +36,9 @@ public class NextTourManager : MonoBehaviour
             NextTourButton.SetActive(true);
         else
             NextTourButton.SetActive(false);
-
-
+        GetCardFromDeckUpdateVers();
     }
+    
     public void NextTour()
     {
         GameObject[] card = GameObject.FindGameObjectsWithTag("PlayinCard");
@@ -49,7 +52,6 @@ public class NextTourManager : MonoBehaviour
         TotalTourDamage();
         RandomEnemyCardCreate();
         GetCardsFromDeck();
-
     }
     void GetCardsFromDeck()
     {
@@ -63,10 +65,38 @@ public class NextTourManager : MonoBehaviour
             GameObject[] _card = GameObject.FindGameObjectsWithTag("InsideDeck");
             int RandomCardNumber = Random.Range(0, _card.Length);
             HandRect[i] = taggedObjects[i].GetComponent<RectTransform>();
-            _card[RandomCardNumber].transform.SetParent(HandRect[i]);
             _card[RandomCardNumber].transform.tag = "PlayinCard";
+
+            float step = 1250f * Time.deltaTime;
+            _card[RandomCardNumber].transform.position = Vector3.MoveTowards(_card[RandomCardNumber].transform.position, taggedObjects[i].transform.position, step);
+
+            if (_card[RandomCardNumber].transform.position.x == taggedObjects[i].transform.position.x)
+            {
+                _card[RandomCardNumber].transform.SetParent(HandRect[i]);
+            }
+            
         }
     }
+    void GetCardFromDeckUpdateVers()
+    {
+        GameObject[] _playingcard = GameObject.FindGameObjectsWithTag("PlayinCard");
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Hand");
+        HandRect = new RectTransform[taggedObjects.Length];
+
+        float step = 1250f * Time.deltaTime;
+        for(int i = 0; i<_playingcard.Length; i++)
+        {
+            if (_playingcard[i].GetComponent<DragAndDrop>().beginDrag == false)
+            {
+                _playingcard[i].transform.position = Vector3.MoveTowards(_playingcard[i].transform.position, taggedObjects[i].transform.position, step);
+
+            }
+        }
+
+
+    }
+
+
     void RandomEnemyCardCreate()
     {
         int RandomTotal = 0;

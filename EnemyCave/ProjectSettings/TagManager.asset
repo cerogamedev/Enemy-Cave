@@ -13,6 +13,7 @@ TagManager:
   - PlayinCard
   - Grave
   - Deck
+  - UpgradeCanva
   layers:
   - Default
   - TransparentFX

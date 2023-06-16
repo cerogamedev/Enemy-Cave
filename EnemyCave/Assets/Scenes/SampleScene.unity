@@ -3732,6 +3732,7 @@ MonoBehaviour:
   canvas: {fileID: 608290348}
   mainCamera: {fileID: 519420031}
   usingNumber: 0
+  beginDrag: 0
   parentAfterDrug: {fileID: 0}
 --- !u!114 &840827632
 MonoBehaviour:
@@ -4530,6 +4531,7 @@ MonoBehaviour:
   HandRect: []
   EnemyCard: {fileID: 8977931282891041126, guid: 23507a1aff8c81b46a7081e83bf2620d, type: 3}
   NextTourButton: {fileID: 514512551}
+  isFinished: 0
 --- !u!4 &1082618242
 Transform:
   m_ObjectHideFlags: 0
@@ -5379,6 +5381,7 @@ MonoBehaviour:
   canvas: {fileID: 608290348}
   mainCamera: {fileID: 519420031}
   usingNumber: 0
+  beginDrag: 0
   parentAfterDrug: {fileID: 0}
 --- !u!114 &1290050298
 MonoBehaviour:
@@ -7460,6 +7463,7 @@ MonoBehaviour:
   canvas: {fileID: 608290348}
   mainCamera: {fileID: 519420031}
   usingNumber: 0
+  beginDrag: 0
   parentAfterDrug: {fileID: 0}
 --- !u!114 &1895488338
 MonoBehaviour:

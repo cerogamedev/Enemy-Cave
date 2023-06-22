@@ -1,118 +1,99 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
 
 public class WarriorUpgrades : MonoBehaviour
 {
-    private List<UnityAction> functionList = new List<UnityAction>();
-    private List<UnityAction> UIfunctionList = new List<UnityAction>();
+    [HideInInspector] public int random1, random2, random3;
+    private GameObject UpgradeManager;
+    private bool checkToShow =true;
+    [HideInInspector] public bool warriorUpgrade3 = false;
+    [HideInInspector] public bool warriorUpgradeDefence2 = false, warriorAllowDefence2 = false;
+    [HideInInspector] public bool warriorUpgradeDefence3 = false;
+    [HideInInspector] public bool warriorUpgradeDefence4 = false, warriorAllowDefence4 = false;
+    [HideInInspector] public bool warriorUpgradeDefence5 = false;
 
-    public bool upgradeDone = false;
-    public int spikeInt = 0;
 
-    List<int> numbers = new List<int>();
+    public static int spike;
+    
+    private void Awake()
+    {
+        RandomNumberCreate();
 
-
-    public int randomIndx0, randomIndx1, randomIndx2;
+    }
     private void Start()
     {
-        if (this.gameObject.GetComponent<Card>().isDefence)
-        {
-            
-        }
-        else if (this.gameObject.GetComponent<Card>().isAttack)
-        {
-            functionList.Add(WarriorAttackUpgrade1);
-            functionList.Add(WarriorAttackUpgrade2);
-            functionList.Add(WarriorAttackUpgrade3);
-
-            UIfunctionList.Add(UIWarriorAttackUpgrade1);
-            UIfunctionList.Add(UIWarriorAttackUpgrade2);
-            UIfunctionList.Add(UIWarriorAttackUpgrade3);
-        }
-        Select3RandomFunc();
+        UpgradeManager = GameObject.Find("UpgradeManager");
+        spike = 0;
     }
-    public void Select3RandomFunc()
+    private void Update()
     {
-        while (numbers.Count < 3)
-        {
-            int randomNumber = Random.Range(0, functionList.Count);
 
-            if (!numbers.Contains(randomNumber))
-            {
-                numbers.Add(randomNumber);
-            }
-        }
-
-        randomIndx0 = numbers[0];
-        randomIndx1 = numbers[1];
-        randomIndx2 = numbers[2];
-    }
-    public void Update()
-    {
-        if (upgradeDone)
+        if (this.gameObject.GetComponent<DragAndDrop>().usingNumber == 2 && checkToShow)
         {
-            UpgradeManager.Instance.firstUpTitle.text = "";
-            UpgradeManager.Instance.secondUpTitle.text = "";
-            UpgradeManager.Instance.thirthUpTitle.text = "";
-            UpgradeManager.Instance.upgradeCanva.SetActive(false);
-            this.GetComponent<DragAndDrop>().usingNumber += 1;
-        }
-        else if (this.gameObject.GetComponent<DragAndDrop>().usingNumber == 2)
-        {
-            UpgradeManager.Instance.upgradeCanva.SetActive(true);
-            UIfunctionList[randomIndx0].Invoke();
-            UIfunctionList[randomIndx1].Invoke();
-            UIfunctionList[randomIndx2].Invoke();
+            ShowCheck();
         }
     }
-    public void MainWarriorUpgrade1()
+    void ShowCheck()
     {
-        functionList[randomIndx0].Invoke();
+        UpgradeManager.GetComponent<UpgradeManager>().isShowCanva = true;
+        UpgradeManager.GetComponent<UpgradeManager>().firstUpTitle.text = random1.ToString();
+        UpgradeManager.GetComponent<UpgradeManager>().secondUpTitle.text = random2.ToString();
+        UpgradeManager.GetComponent<UpgradeManager>().thirthUpTitle.text = random3.ToString();
 
-        upgradeDone = true;
+        checkToShow = false;
     }
-    public void MainWarriorUpgrade2()
+    void RandomNumberCreate()
     {
-        functionList[randomIndx1].Invoke();
+        random1 = Random.Range(0, 3);
+        random2 = Random.Range(0, 3);
+        while (random1==random2)
+        {
+            random2 = Random.Range(0, 3);
+        }
 
-        upgradeDone = true;
-
+        random3 = Random.Range(0, 3);
+        while (random3 == random2 || random3 == random1)
+        {
+            random3 = Random.Range(0, 3);
+        }
     }
-    public void MainWarriorUpgrade3()
+    void WarriorUpgradeAttack1()
     {
-        functionList[randomIndx2].Invoke();
-
-        upgradeDone = true;
-
-    }
-    public void WarriorAttackUpgrade1()
-    {
-        this.gameObject.GetComponent<Card>().healthInt += 5;
         this.gameObject.GetComponent<Card>().attackInt += 5;
-
-    }
-    public void WarriorAttackUpgrade2()
-    {
-        this.gameObject.GetComponent<Card>().attackInt = Health.Instance.mainArmor;
-    }
-    public void  WarriorAttackUpgrade3()
-    {
         this.gameObject.GetComponent<Card>().healthInt += 5;
     }
-    public void UIWarriorAttackUpgrade1()
+    void WarriorUpgradeAttack2()
     {
-        UpgradeManager.Instance.firstUpTitle.text = "+5 for defence and attack";
+        this.gameObject.GetComponent<Card>().healthInt += this.gameObject.GetComponent<Card>().attackInt;
     }
-    public void UIWarriorAttackUpgrade2()
+    void WarriorUpgradeAttack3()
     {
-        UpgradeManager.Instance.secondUpTitle.text = "Earn as many attacks as each armor";
-
+        this.gameObject.GetComponent<Card>().attackInt += 5;
+        warriorUpgrade3 = true;
     }
-    public void UIWarriorAttackUpgrade3()
+    void WarriorUpgradeDefence1()
     {
-        UpgradeManager.Instance.thirthUpTitle.text = "+5 for defence";
+        Health.Instance.SetArmor(+10);
+    }
+    void WarriorUpgradeDefence2()
+    {
+        Health.Instance.SetArmor(+5);
+        warriorUpgradeDefence2 = true;
+        warriorAllowDefence2 = true;
+    }
+    void WarriorUpgradeDefence3()
+    {
+        warriorUpgradeDefence3 = true;
+    }
+    void WarriorUpgradeDefence4()
+    {
+        this.gameObject.GetComponent<Card>().SetDefence(+5);
+        warriorUpgradeDefence4 = true;
+        warriorAllowDefence4 = true;
+    }
+    void WarriorUpgradeDefence5()
+    {
+        warriorUpgradeDefence5 = true;
     }
 }

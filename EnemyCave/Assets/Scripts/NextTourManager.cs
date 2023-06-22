@@ -13,7 +13,6 @@ public class NextTourManager : MonoBehaviour
     public GameObject NextTourButton;
 
     public bool isFinished = false;
-    private GameObject[] fromThis, toHere;
 
     void Start()
     {
@@ -32,7 +31,7 @@ public class NextTourManager : MonoBehaviour
         {
             imageRect[i] = taggedObjects[i].GetComponent<RectTransform>();
         }
-        if (DragAndDrop.nextTourCounter == 0)
+        if (DragAndDrop.nextTourCounter <= 0)
             NextTourButton.SetActive(true);
         else
             NextTourButton.SetActive(false);
@@ -40,6 +39,23 @@ public class NextTourManager : MonoBehaviour
     }
     
     public void NextTour()
+    {
+        StartCoroutine(RunFunctions());
+
+    }
+    private System.Collections.IEnumerator RunFunctions()
+    {
+        yield return StartCoroutine(TotalTourDamage());
+
+        yield return StartCoroutine(PlayincardToPlayedCard());
+
+        yield return StartCoroutine(WarriorDefence2Upgrade());
+
+        yield return StartCoroutine(RandomEnemyCardCreate());
+
+        yield return StartCoroutine(GetCardsFromDeck());
+    }
+    private System.Collections.IEnumerator PlayincardToPlayedCard()
     {
         GameObject[] card = GameObject.FindGameObjectsWithTag("PlayinCard");
 
@@ -49,11 +65,9 @@ public class NextTourManager : MonoBehaviour
             card[i].transform.tag = "PlayedCard";
         }
         DragAndDrop.nextTourCounter = 2;
-        TotalTourDamage();
-        RandomEnemyCardCreate();
-        GetCardsFromDeck();
+        yield return null;
     }
-    void GetCardsFromDeck()
+    private System.Collections.IEnumerator GetCardsFromDeck()
     {
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Hand");
 
@@ -76,6 +90,7 @@ public class NextTourManager : MonoBehaviour
             }
             
         }
+        yield return null;
     }
     void GetCardFromDeckUpdateVers()
     {
@@ -97,7 +112,7 @@ public class NextTourManager : MonoBehaviour
     }
 
 
-    void RandomEnemyCardCreate()
+    private System.Collections.IEnumerator RandomEnemyCardCreate()
     {
         int RandomTotal = 0;
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("EnemyCard");
@@ -112,11 +127,12 @@ public class NextTourManager : MonoBehaviour
             Instantiate(EnemyCard, imageRect[randomnumber].transform);
             imageRect[randomnumber].transform.tag = "Close";
         }
-        else
-            return;
+
+
+        yield return null;
     }
 
-    void TotalTourDamage()
+    private System.Collections.IEnumerator TotalTourDamage()
     {
 
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("EnemyCard");
@@ -125,6 +141,7 @@ public class NextTourManager : MonoBehaviour
             taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown -= 1;
             if (taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown == 0)
             {
+                taggedObjects[i].GetComponent<Enemy>().SetHealth(-WarriorUpgrades.spike);
                 int damage = taggedObjects[i].GetComponent<Enemy>().healthInt;
                 taggedObjects[i].GetComponent<Enemy>().inGameDamageCountdown = taggedObjects[i].GetComponent<Enemy>()._DamageCountdown;
                 for (int j = 0; j < damage; j++)
@@ -139,7 +156,33 @@ public class NextTourManager : MonoBehaviour
                     }
                 }
             }
-
         }
+        yield return null;
+    }
+    private System.Collections.IEnumerator WarriorDefence2Upgrade()
+    {
+        GameObject[] _playedCard = GameObject.FindGameObjectsWithTag("PlayedCard");
+        for (int i=0; i<_playedCard.Length;i++)
+        {
+            if (_playedCard[i].GetComponent<WarriorUpgrades>().warriorUpgradeDefence2 && Health.Instance.GetArmor()>0)
+            {
+                Health.Instance.SetArmor(+2);
+                _playedCard[i].GetComponent<WarriorUpgrades>().warriorUpgradeDefence2 = false;
+            }
+        }
+        yield return null;
+    }
+    private System.Collections.IEnumerator WarriorDefence4Upgrade()
+    {
+        GameObject[] _playedCard = GameObject.FindGameObjectsWithTag("PlayedCard");
+        for (int i = 0; i < _playedCard.Length; i++)
+        {
+            if (_playedCard[i].GetComponent<WarriorUpgrades>().warriorUpgradeDefence4)
+            {
+                Health.Instance.SetHealth(+3);
+                _playedCard[i].GetComponent<WarriorUpgrades>().warriorUpgradeDefence4 = false;
+            }
+        }
+        yield return null;
     }
 }

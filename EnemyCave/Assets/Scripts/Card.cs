@@ -8,7 +8,7 @@ public class Card : MonoBehaviour
 {
     public CardController card;
     public Image ArtWork;
-    public TextMeshProUGUI _health, _attack, _name;
+    public TextMeshProUGUI _health, _attack, _name, _usingNumb;
     public int healthInt, attackInt;
 
     public bool isDefence, isAttack;
@@ -26,14 +26,22 @@ public class Card : MonoBehaviour
             isAttack = true;
             isDefence = false;
         }
+        ArtWork.sprite = card.artwork;
+
     }
 
     void Update()
     {
-        _health.text = "H: " + healthInt.ToString();
+        _health.text = "D: " + healthInt.ToString();
         _attack.text = "A: "+ attackInt.ToString();
-        ArtWork.sprite = card.artwork;
         _name.text = card.cardName;
+        if (this.gameObject.GetComponent<DragAndDrop>().usingNumber>=2)
+        {
+            _usingNumb.text = "";
+        }
+        else
+            _usingNumb.text = this.gameObject.GetComponent<DragAndDrop>().usingNumber.ToString() + "/2";
+
     }
     public int GetAttack()
     {

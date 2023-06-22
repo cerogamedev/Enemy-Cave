@@ -1,35 +1,34 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class UpgradeManager : MonoBehaviour
 {
     public TextMeshProUGUI firstUpTitle, secondUpTitle, thirthUpTitle;
     public GameObject upgradeCanva;
-    private static UpgradeManager instance;
+    public bool isShowCanva = false;
 
-    private UpgradeManager() { }
-
-    public static UpgradeManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject singletonObject = new GameObject();
-                instance = singletonObject.AddComponent<UpgradeManager>();
-                singletonObject.name = "UpgradeManager (Singleton)";
-                DontDestroyOnLoad(singletonObject);
-            }
-
-            return instance;
-        }
-    }
     private void Awake()
     {
-        upgradeCanva = GameObject.FindGameObjectWithTag("UpgradeCanva");
+
     }
     public void Update()
     {
-
+        if (isShowCanva)
+        {
+            upgradeCanva.SetActive(true);
+        }
+        else
+        {
+            if (upgradeCanva == null)
+            {
+                upgradeCanva = GameObject.FindGameObjectWithTag("UpgradeCanva");
+                return;
+            }
+            else
+                upgradeCanva.SetActive(false);
+        }
     }
+
 }

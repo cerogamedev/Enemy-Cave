@@ -73,10 +73,37 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 if (2*currentObject.transform.GetChild(0).GetComponent<Enemy>().healthInt <= this.gameObject.GetComponent<Card>().attackInt)
                 {
                     currentObject.transform.tag = "Slot";
+                    if (this.gameObject.GetComponent<WarriorUpgrades>().warriorUpgrade3)
+                        Health.Instance.SetHealth(+3);
                 }
                 Health.Instance.SetArmor(this.gameObject.GetComponent<Card>().healthInt);
+                if (this.gameObject.GetComponent<WarriorUpgrades>().warriorAllowDefence2)
+                {
+                    this.gameObject.GetComponent<WarriorUpgrades>().warriorUpgradeDefence2 = true;
+                }
+                if (this.gameObject.GetComponent<WarriorUpgrades>().warriorAllowDefence4)
+                {
+                    this.gameObject.GetComponent<WarriorUpgrades>().warriorUpgradeDefence4 = true;
+                }
+                if (this.gameObject.GetComponent<WarriorUpgrades>().warriorUpgradeDefence5)
+                {
+                    WarriorUpgrades.spike += 2;
+                }
+                if (this.gameObject.GetComponent<WarriorUpgrades>().warriorUpgradeDefence3)
+                {
+                    nextTourCounter -= 1;
+                    GameObject[] _playinCards = GameObject.FindGameObjectsWithTag("PlayinCard");
+                    for (int j =0;j<_playinCards.Length;j++)
+                    {
+                        if (_playinCards[i].GetComponent<Card>().isDefence)
+                        {
+                            _playinCards[i].tag = "PlayedCard";
+                        }
+                    }
+                }
             }
         }
+
         // Reset to initial position if not dropped on a valid target
         if (!eventData.pointerEnter)
         {

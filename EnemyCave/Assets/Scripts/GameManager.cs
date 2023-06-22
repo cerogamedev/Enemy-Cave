@@ -86,5 +86,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    //write a card upgrade per tour 1/2 upgrade point and 1 uprade per card. look the upgrade system
 }
